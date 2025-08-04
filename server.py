@@ -193,7 +193,7 @@ def login():
     session["code_verifier"], challenge = generate_pkce_pair()
     session["state"] = secrets.token_urlsafe(16)
     return redirect(
-        "https://twitter.com/i/oauth2/authorize"
+        "https://x.com/i/oauth2/authorize"
         f"?response_type=code&client_id={CLIENT_ID}"
         f"&redirect_uri={REDIRECT_URI}"
         f"&scope=users.read tweet.read like.write offline.access"
