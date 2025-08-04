@@ -21,6 +21,7 @@ REDIRECT_URI = os.getenv(
     "REDIRECT_URI",  "https://engagementbot-production.up.railway.app/callback")
 DB_PATH = os.getenv("DB_PATH",       "twitter_accounts.db")
 PORT = int(os.getenv("PORT",      5000))
+BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAAKyw3AEAAAAA70%2BM8vhVUQR7I9F%2B30br9r7N7Io%3D1XMbAVd0m3y7DCb5lx84kpaSOxUlMQAXT6osNdgc077iy0SEB9"
 
 # ─────────────────────────────────────────────────────────────
 # Database Setup (runs on every start)
@@ -59,6 +60,21 @@ def setup_db():
 # ─────────────────────────────────────────────────────────────
 # PKCE Helpers
 # ─────────────────────────────────────────────────────────────
+
+
+def resolve_user_id(username):
+    username = username.lstrip('@')
+    url = f"https://api.twitter.com/2/users/by/username/{username}"
+    headers = {
+        "Authorization": f"Bearer {BEARER_TOKEN}"
+    }
+    res = requests.get(url, headers=headers)
+
+    if res.status_code == 200:
+        return res.json()["data"]["id"]
+    else:
+        print(f"❌ Failed to resolve @{username}: {res.text}")
+        return None
 
 
 def generate_pkce_pair():
