@@ -1,45 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Twitter Like Bot Dashboard</title>
+    <title>Twitter Engagement Bot Dashboard</title>
 </head>
 <body>
-    <h2>🛠 Twitter Like Bot Dashboard</h2>
+    <h2>📋 Twitter Engagement Bot Dashboard</h2>
+    <hr>
 
+    <!-- 👍 Like Section -->
+    <h3>Like a Tweet</h3>
     <form method="POST">
         <label>Tweet ID to Like:</label>
-        <input type="text" name="tweet_id" value="{{ tweet_id }}" required>
+        <input type="text" name="tweet_id" value="{{ tweet_id or '' }}" required>
         <button type="submit">Like Now</button>
     </form>
 
+    {% if like_results %}
+        <h4>Like Results:</h4>
+        <table border="1" cellpadding="8">
+            <tr>
+                <th>Username</th>
+                <th>Status</th>
+            </tr>
+            {% for handle, status in like_results %}
+            <tr>
+                <td>@{{ handle or 'None' }}</td>
+                <td>{{ status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 
     <hr>
-<h3>🔁 Follow Target Account</h3>
-<form method="POST" action="/follow_now">
-    <label>Twitter User ID to Follow:</label>
-    <input type="text" name="follow_target_id" value="{{ follow_target_id or '' }}" required>
-    <button type="submit">Follow Now</button>
-</form>
 
-{% if follow_results %}
-    <br><h3>Follow Results:</h3>
-    <table border="1" cellpadding="8">
-        <tr>
-            <th>Username</th>
-            <th>Status</th>
-        </tr>
-        {% for handle, status in follow_results %}
-        <tr>
-            <td>@{{ handle }}</td>
-            <td>{{ status }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-{% endif %}
+    <!-- 🔁 Follow Section -->
+    <h3>Follow a Twitter User</h3>
+    <form method="POST">
+        <label>Twitter User ID to Follow:</label>
+        <input type="text" name="follow_target_id" value="{{ follow_id or '' }}" required>
+        <button type="submit">Follow Now</button>
+    </form>
 
+    {% if follow_results %}
+        <h4>Follow Results:</h4>
+        <table border="1" cellpadding="8">
+            <tr>
+                <th>Username</th>
+                <th>Status</th>
+            </tr>
+            {% for handle, status in follow_results %}
+            <tr>
+                <td>@{{ handle or 'None' }}</td>
+                <td>{{ status }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 
-    <br>
-    <h3>Connected Accounts:</h3>
+    <hr>
+
+    <!-- 🧾 Account List -->
+    <h3>Connected Accounts</h3>
     <table border="1" cellpadding="8">
         <thead>
             <tr>
@@ -59,24 +80,7 @@
         </tbody>
     </table>
 
-    {% if results %}
-        <br><h3>Like Results:</h3>
-        <table border="1" cellpadding="8">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for handle, status in results %}
-                <tr>
-                    <td>@{{ handle or 'None' }}</td>
-                    <td>{{ status }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
+    <hr>
+    <p><a href="/login">+ Connect Another Twitter Account</a></p>
 </body>
 </html>
