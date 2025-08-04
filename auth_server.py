@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.secret_key = '2Uv1UEFPgo8ow0pFVLffpGWOsGpB0YZKESOTi9itMIJq9a5F7e'
 
 CLIENT_ID = "dUtBWEVpSC1IX20zZFROOFJiUG06MTpjaQ"
-REDIRECT_URI = "https://356f2427eb66.ngrok-free.app/callback"
+REDIRECT_URI = "https://engagementbot-production.up.railway.app/callback"
 DB_PATH = 'twitter_accounts.db'
 
 
